@@ -1,6 +1,6 @@
 export default function Logo() {
 
-    const year: number = new Date().getFullYear();
+  const year: number = new Date().getFullYear();
 
   return (
     <div className="flex flex-col items-end gap-2">
