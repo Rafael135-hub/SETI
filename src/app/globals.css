@@ -1,26 +1,104 @@
+@import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400..900&family=Outfit:wght@100..900&display=swap');
 @import "tailwindcss";
 
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  --background: #09090B;
+
+  --seti-purple-00: #080018;
+  --seti-purple-05: #0D0026;
+  --seti-purple-10: #10002F;
+  --seti-purple-15: #120037;
+  --seti-purple-20: #461A9D;
+  --seti-purple-25: #59218D;
+  --seti-purple-30: #4E2F8C;
+  --seti-purple-35: #3902A8;
+  --seti-purple-40: #5924C2;
+  --seti-purple-45: #7B39FF;
+  --seti-purple-50: #7F3FFF;
+  --seti-purple-55: #6E43C4;
+  --seti-purple-60: #8B50FF;
+  --seti-purple-65: #8956EE;
+  --seti-purple-70: #8956EE;
+  --seti-purple-75: #9E6FFE;
+  --seti-purple-80: #A77AFF;
+  --seti-purple-85: #C990FF;
+
+  --seti-translucid-green: rgba(56, 255, 20, 0.2);
+
+  --seti-translucid-red: rgba(255, 71, 71, 0.2);
+
+  --seti-translucid-black: rgba(0, 0, 0, 0.2);
+
+  --seti-translucid-blue--00: rgba(16, 0, 47, 0.2);
+  --seti-translucid-blue--05: rgba(8, 0, 24, 0.7);
+
+  --seti-translucid-purple-10: rgba(85, 0, 255, 0.8);
+  --seti-translucid-purple-20: rgba(92, 11, 255, 0.6);
+  --seti-translucid-purple-30: rgba(144, 96, 238, 0.8);
+  --seti-translucid-purple-40: rgba(128, 77, 231, 0.6);
+  --seti-translucid-purple-50: rgba(105, 52, 210, 0.5);
+  --seti-translucid-purple-60: rgba(88, 37, 188, 0.4);
+  --seti-translucid-purple-70: rgba(67, 19, 161, 0.3);
+  --seti-translucid-purple-80: rgba(52, 1, 152, 0.2);
+  --seti-translucid-purple-90: rgba(42, 0, 125, 0.15);
+  --seti-translucid-purple-100: rgba(152, 100, 255, 0.1);
+
 }
 
 @theme inline {
   --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+
+  --color-seti-purple-00: var(--seti-purple-00);
+  --color-seti-purple-05: var(--seti-purple-05);
+  --color-seti-purple-10: var(--seti-purple-10);
+  --color-seti-purple-15: var(--seti-purple-15);
+  --color-seti-purple-20: var(--seti-purple-20);
+  --color-seti-purple-25: var(--seti-purple-25);
+  --color-seti-purple-30: var(--seti-purple-30);
+  --color-seti-purple-35: var(--seti-purple-35);
+  --color-seti-purple-40: var(--seti-purple-40);
+  --color-seti-purple-45: var(--seti-purple-45);
+  --color-seti-purple-50: var(--seti-purple-50);
+  --color-seti-purple-55: var(--seti-purple-55);
+  --color-seti-purple-60: var(--seti-purple-60);
+  --color-seti-purple-65: var(--seti-purple-65);
+  --color-seti-purple-70: var(--seti-purple-70);
+  --color-seti-purple-75: var(--seti-purple-75);
+  --color-seti-purple-80: var(--seti-purple-80);
+  --color-seti-purple-85: var(--seti-purple-85);
+
+  --color-seti-translucid-green: var(--seti-translucid-green);
+
+  --color-seti-translucid-red: var(--seti-translucid-red);
+
+  --color-seti-translucid-black: var(--seti-translucid-black);
+
+  --color-seti-translucid-blue--00: var(--seti-translucid-blue--00);
+  --color-seti-translucid-blue--05: var(--seti-translucid-blue--05);
+
+  --color-seti-translucid-purple-10: var(--seti-translucid-purple-10);
+  --color-seti-translucid-purple-20: var(--seti-translucid-purple-20);
+  --color-seti-translucid-purple-30: var(--seti-translucid-purple-30);
+  --color-seti-translucid-purple-40: var(--seti-translucid-purple-40);
+  --color-seti-translucid-purple-50: var(--seti-translucid-purple-50);
+  --color-seti-translucid-purple-60: var(--seti-translucid-purple-60);
+  --color-seti-translucid-purple-70: var(--seti-translucid-purple-70);
+  --color-seti-translucid-purple-80: var(--seti-translucid-purple-80);
+  --color-seti-translucid-purple-90: var(--seti-translucid-purple-90);
+  --color-seti-translucid-purple-100: var(--seti-translucid-purple-100);
+
+  --font-outfit-sans: "Outfit", ui-sans-serif, system-ui, sans-serif;
+  --font-orbitron: "Orbitron", sans-serif;
+
 }
 
 @media (prefers-color-scheme: dark) {
   :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
+    --background: #09090B;
   }
 }
 
 body {
   background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  font-family: var(--font-sans);
 }
