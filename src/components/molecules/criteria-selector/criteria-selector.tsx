@@ -40,7 +40,7 @@ export default function CriteriaSelector({
         onClick={onPrevious}
         disabled={isDisabled}
         aria-label="Criterio anterior"
-        className="pointer-events-auto flex h-[clamp(2.55rem,9vw,3rem)] w-[clamp(2.55rem,9vw,3rem)] items-center justify-center bg-transparent text-white/78 transition-colors hover:text-white disabled:cursor-not-allowed disabled:opacity-45"
+        className="pointer-events-auto flex h-[clamp(2.55rem,9vw,3rem)] w-[clamp(2.55rem,9vw,3rem)] cursor-pointer items-center justify-center bg-transparent text-white/78 transition-colors hover:text-white disabled:cursor-not-allowed disabled:opacity-45"
       >
         <ArrowIcon direction="left" />
       </button>
@@ -50,7 +50,7 @@ export default function CriteriaSelector({
         onClick={onNext}
         disabled={isDisabled}
         aria-label="Proximo criterio"
-        className="pointer-events-auto flex h-[clamp(2.55rem,9vw,3rem)] w-[clamp(2.55rem,9vw,3rem)] items-center justify-center bg-transparent text-white/78 transition-colors hover:text-white disabled:cursor-not-allowed disabled:opacity-45"
+        className="pointer-events-auto flex h-[clamp(2.55rem,9vw,3rem)] w-[clamp(2.55rem,9vw,3rem)] cursor-pointer items-center justify-center bg-transparent text-white/78 transition-colors hover:text-white disabled:cursor-not-allowed disabled:opacity-45"
       >
         <ArrowIcon direction="right" />
       </button>

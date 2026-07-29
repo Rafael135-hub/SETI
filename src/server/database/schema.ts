@@ -89,7 +89,7 @@ export const eventDaysTable = pgTable(
   {
     id: uuid("id").defaultRandom().primaryKey(),
     eventDate: date("event_date", { mode: "string" }).notNull(),
-    classNumber: integer("class_number").notNull(),
+    classNumbers: integer("class_numbers").array().notNull(),
     speakerId: uuid("speaker_id")
       .notNull()
       .references(() => speakersTable.id, { onDelete: "restrict" }),

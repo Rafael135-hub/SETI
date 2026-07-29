@@ -71,7 +71,7 @@ export default function CriteriaBanner({ criteria }: CriteriaBannerProps) {
   };
 
   return (
-    <section className="criteria-page relative min-h-[calc(100svh-120px)] overflow-x-clip px-[5vw] pb-[clamp(4.5rem,10vw,8rem)] pt-[clamp(3rem,7vw,5rem)]">
+    <section className="criteria-page relative min-h-[calc(100svh-120px)] overflow-x-clip px-[5vw] pb-[clamp(4.5rem,10vw,8rem)] pt-[clamp(5rem,12vw,7.5rem)]">
       <div className="relative mx-auto w-full grid items-center gap-[clamp(2rem,6vw,4.5rem)] lg:grid-cols-2">
         <article key={currentCriterion.id} className="criteria-copy text-left">
           <p className="criteria-badge font-outfit-sans text-[clamp(0.7rem,2vw,0.82rem)] font-medium uppercase leading-tight">

@@ -32,8 +32,18 @@ function formatClassDisplayName(classItem: {
   return `${classItem.classNumber}o Ano ${classItem.classLetter}`;
 }
 
-function formatClassNumberDisplayName(classNumber: number) {
-  return `${classNumber}o Ano`;
+function formatClassNumbersDisplayName(classNumbers: number[]) {
+  const labels = classNumbers.map((classNumber) => `${classNumber}o`);
+
+  if (labels.length === 1) {
+    return `${labels[0]} Ano`;
+  }
+
+  if (labels.length === 2) {
+    return `${labels[0]} e ${labels[1]} Ano`;
+  }
+
+  return `${labels.slice(0, -1).join(", ")} e ${labels.at(-1)} Ano`;
 }
 
 async function getSpeakerContactsBySpeakerIds(speakerIds: string[]) {
@@ -143,8 +153,8 @@ async function hydrateEventDays(eventDays: EventDay[]) {
     return {
       ...eventDay,
       class: {
-        classNumber: eventDay.classNumber,
-        displayName: formatClassNumberDisplayName(eventDay.classNumber),
+        classNumbers: eventDay.classNumbers,
+        displayName: formatClassNumbersDisplayName(eventDay.classNumbers),
       },
       speaker: {
         ...speaker,

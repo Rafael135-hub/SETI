@@ -18,6 +18,7 @@ const client = new Client({
 const scriptDirectory = dirname(fileURLToPath(import.meta.url));
 const migrationsDirectory = resolve(scriptDirectory, "..", "drizzle");
 const compatibilityMigrationPath = resolve(migrationsDirectory, "0006_vercel_deploy_compatibility.sql");
+const eventDayClassNumbersMigrationPath = resolve(migrationsDirectory, "0007_event_days_use_class_numbers.sql");
 
 try {
   await client.connect();
@@ -47,6 +48,8 @@ try {
 
   await client.query(await readFile(compatibilityMigrationPath, "utf8"));
   console.log("Applied 0006_vercel_deploy_compatibility.sql.");
+  await client.query(await readFile(eventDayClassNumbersMigrationPath, "utf8"));
+  console.log("Applied 0007_event_days_use_class_numbers.sql.");
 } finally {
   await client.end().catch(() => undefined);
 }

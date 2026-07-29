@@ -1,4 +1,7 @@
+"use client";
+
 import Image from "next/image";
+import { type SyntheticEvent, useState } from "react";
 
 interface CriteriaHologramProps {
   image?: string;
@@ -30,15 +33,34 @@ function PenaltyLabel({ penalty }: { penalty: string }) {
 }
 
 function HologramImage({ image, imageAlt }: Pick<CriteriaHologramProps, "image" | "imageAlt">) {
+  const [isNearSquare, setIsNearSquare] = useState(false);
+  const maxHeightClass = isNearSquare
+    ? "max-h-[clamp(18.48rem,76.67vw,25.575rem)]"
+    : "max-h-[clamp(21.84rem,90.61vw,30.225rem)]";
+
+  const handleLoad = (event: SyntheticEvent<HTMLImageElement>) => {
+    const { naturalHeight, naturalWidth } = event.currentTarget;
+
+    if (naturalHeight === 0 || naturalWidth === 0) {
+      return;
+    }
+
+    const aspectDifference = Math.abs(naturalWidth - naturalHeight) / Math.max(naturalWidth, naturalHeight);
+    setIsNearSquare(aspectDifference <= 0.1);
+  };
+
   return (
-    <Image
-      src={image ?? DEFAULT_CRITERIA_IMAGE}
-      alt={imageAlt ?? "Celular do criterio"}
-      width={512}
-      height={512}
-      priority
-      className="criteria-hologram-image h-[clamp(12.5rem,54vw,18.75rem)] w-auto object-contain"
-    />
+    <div className="mx-auto flex w-[80%] items-end justify-center">
+      <Image
+        src={image ?? DEFAULT_CRITERIA_IMAGE}
+        alt={imageAlt ?? "Celular do criterio"}
+        width={512}
+        height={512}
+        priority
+        onLoad={handleLoad}
+        className={`criteria-hologram-image block h-auto ${maxHeightClass} max-w-full w-auto object-bottom`}
+      />
+    </div>
   );
 }
 
@@ -52,7 +74,7 @@ export default function CriteriaHologram({
 
   return (
     <article
-      className={`criteria-hologram relative mx-auto flex h-[clamp(19.75rem,82vw,27.375rem)] w-full max-w-[600px] items-end justify-center ${className}`}
+      className={`criteria-hologram relative mx-auto mt-[clamp(1.5rem,4vw,3rem)] flex h-[clamp(19.75rem,82vw,27.375rem)] w-full max-w-[600px] items-end justify-center ${className}`}
     >
       <div className="pointer-events-none absolute bottom-[clamp(2.25rem,9vw,3.25rem)] h-[clamp(13rem,54vw,17.875rem)] w-full rounded-full bg-[#9864FF]/28 blur-[60px]" />
       <div className="pointer-events-none absolute bottom-[clamp(7.6rem,31vw,10.375rem)] h-[clamp(8.5rem,35vw,11.5rem)] w-[68%] rounded-full bg-[#9864FF]/20 blur-[38px]" />
