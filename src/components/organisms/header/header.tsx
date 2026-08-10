@@ -4,6 +4,7 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useEffect, useLayoutEffect, useRef, useState } from "react";
 import Logo from "../../molecules/logo/logo";
+import { useMusic } from "../../providers/music-provider";
 
 interface HeaderLink {
   label: string;
@@ -17,12 +18,10 @@ interface HeaderProps {
 export default function Header({ links }: HeaderProps) {
   const [scrollProgress, setScrollProgress] = useState<number>(0);
   const [isMenuOpen, setIsMenuOpen] = useState<boolean>(false);
-  const [isSoundEnabled, setIsSoundEnabled] = useState<boolean>(false);
   const [isSoundPanelOpen, setIsSoundPanelOpen] = useState<boolean>(false);
-  const [volume, setVolume] = useState<number>(0.35);
-  const audioRef = useRef<HTMLAudioElement>(null);
   const soundPanelRef = useRef<HTMLDivElement>(null);
   const pathname = usePathname();
+  const { isSoundEnabled, volume, setVolume, toggleSound: toggleMusicSound } = useMusic();
   const currentPageLabel = links.find((link) => link.href === pathname)?.label;
 
   useLayoutEffect(() => {
@@ -61,13 +60,10 @@ export default function Header({ links }: HeaderProps) {
 
   const closeMenu = () => setIsMenuOpen(false);
 
-  useEffect(() => {
-    const loadSoundPreference = window.setTimeout(() => {
-      setIsSoundEnabled(window.localStorage.getItem("seti-sound-enabled") === "true");
-    }, 0);
-
-    return () => window.clearTimeout(loadSoundPreference);
-  }, []);
+  const toggleSound = () => {
+    toggleMusicSound();
+    setIsSoundPanelOpen(true);
+  };
 
   useEffect(() => {
     if (!isSoundPanelOpen) return;
@@ -81,25 +77,6 @@ export default function Header({ links }: HeaderProps) {
     document.addEventListener("pointerdown", handleOutsidePointerDown);
     return () => document.removeEventListener("pointerdown", handleOutsidePointerDown);
   }, [isSoundPanelOpen]);
-
-  useEffect(() => {
-    const audio = audioRef.current;
-    if (!audio) return;
-
-    audio.volume = volume;
-    if (isSoundEnabled) {
-      void audio.play().catch(() => setIsSoundEnabled(false));
-    } else {
-      audio.pause();
-    }
-  }, [isSoundEnabled, volume]);
-
-  const toggleSound = () => {
-    const nextSoundState = !isSoundEnabled;
-    setIsSoundEnabled(nextSoundState);
-    setIsSoundPanelOpen(true);
-    window.localStorage.setItem("seti-sound-enabled", String(nextSoundState));
-  };
 
   return (
     <>
@@ -172,8 +149,6 @@ export default function Header({ links }: HeaderProps) {
           </div>
         </div>
       </header>
-
-      <audio ref={audioRef} src="/sb_electricdreams.mp3" loop preload="metadata" aria-hidden="true" />
 
       <div
         className={`fixed inset-0 z-[999] transition-opacity duration-300 ${

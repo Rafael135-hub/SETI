@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import StarsBackground from "../components/atoms/stars-atom/stars-atom";
+import { MusicProvider } from "../components/providers/music-provider";
 import { SmoothScrollProvider } from "../components/providers/smooth-scroll-provider";
 import "./globals.css";
 
@@ -17,7 +18,9 @@ export default function RootLayout({
     <html lang="pt-BR">
       <body className="relative antialiased">
         <StarsBackground className="pointer-events-none fixed inset-0 z-[1]" />
-        <SmoothScrollProvider>{children}</SmoothScrollProvider>
+        <MusicProvider>
+          <SmoothScrollProvider>{children}</SmoothScrollProvider>
+        </MusicProvider>
       </body>
     </html>
   );

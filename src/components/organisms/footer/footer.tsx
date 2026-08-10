@@ -61,7 +61,7 @@ export default function Footer({ socials, signature }: FooterProps) {
               ))}
             </div>
 
-            <p className="font-orbitron text-[clamp(1.2rem,5vw,1.875rem)] tracking-[0.05em] text-white">
+            <p className="font-aquire font-light text-[clamp(1.2rem,5vw,1.875rem)] tracking-[0.05em] text-white/80">
               {signature}
             </p>
           </div>

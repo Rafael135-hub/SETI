@@ -32,7 +32,9 @@ type SpeakerLinkData = {
 type ScheduleItemData = {
   id: string;
   dayLabel: string;
-  speaker: {
+  speakerNames: string;
+  isTimelineInteractive: boolean;
+  speakers: {
     picture: string;
     name: string;
     title: string;
@@ -40,7 +42,7 @@ type ScheduleItemData = {
     position: string;
     classroom: string;
     links: SpeakerLinkData[];
-  };
+  }[];
 };
 
 type CriterionItemData = {
@@ -85,11 +87,49 @@ function formatPointsLabel(points: number) {
   return `Pontuacao: ${points >= 0 ? "+" : ""}${points}`;
 }
 
+type LiveScheduleEntry = Awaited<ReturnType<typeof getEventSchedule>>[number];
+
+function mapScheduleSpeaker(item: LiveScheduleEntry): ScheduleItemData["speakers"][number] {
+  return {
+    picture: resolveStorageUrl("speakers", item.speaker.speakerImage) ?? DEFAULT_SPEAKER_IMAGE,
+    name: item.speaker.speakerName,
+    title: item.speaker.speakerPosition,
+    description: item.speaker.speakerDescription,
+    position: "Palestrante",
+    classroom: item.class.displayName,
+    links: item.speaker.contacts.map((contact) => ({
+      url: contact.contactUrl,
+      image: resolveStorageUrl("contacts", contact.contactIcon) ?? DEFAULT_CONTACT_ICON,
+      label: contact.contactName,
+    })),
+  };
+}
+
+function groupScheduleItems(schedule: LiveScheduleEntry[]): ScheduleItemData[] {
+  const seenDates = new Set<string>();
+
+  return schedule.map((item) => {
+    const speaker = mapScheduleSpeaker(item);
+    const isFirstSpeakerForDate = !seenDates.has(item.eventDate);
+    seenDates.add(item.eventDate);
+
+    return {
+      id: `event-day-${item.id}`,
+      dayLabel: isFirstSpeakerForDate ? formatDayLabel(item.eventDate) : "",
+      speakerNames: speaker.name,
+      isTimelineInteractive: isFirstSpeakerForDate,
+      speakers: [speaker],
+    };
+  });
+}
+
 const fallbackScheduleItems: ScheduleItemData[] = [
   {
     id: "fallback-dia-13",
     dayLabel: "13/08",
-    speaker: {
+    speakerNames: "Rafaela Martins",
+    isTimelineInteractive: true,
+    speakers: [{
       picture: DEFAULT_SPEAKER_IMAGE,
       name: "Rafaela Martins",
       title: "Engenheira de Software",
@@ -98,12 +138,14 @@ const fallbackScheduleItems: ScheduleItemData[] = [
       position: "Palestrante",
       classroom: "2o Ano A",
       links: [{ url: "https://www.linkedin.com", image: DEFAULT_CONTACT_ICON, label: "LinkedIn" }],
-    },
+    }],
   },
   {
     id: "fallback-dia-14",
     dayLabel: "14/08",
-    speaker: {
+    speakerNames: "Marina Oliveira",
+    isTimelineInteractive: true,
+    speakers: [{
       picture: DEFAULT_SPEAKER_IMAGE,
       name: "Marina Oliveira",
       title: "Data Analyst",
@@ -112,12 +154,14 @@ const fallbackScheduleItems: ScheduleItemData[] = [
       position: "Palestrante",
       classroom: "5o Ano A",
       links: [{ url: "https://www.linkedin.com", image: DEFAULT_CONTACT_ICON, label: "LinkedIn" }],
-    },
+    }],
   },
   {
     id: "fallback-dia-15",
     dayLabel: "15/08",
-    speaker: {
+    speakerNames: "Grazielly Costa",
+    isTimelineInteractive: true,
+    speakers: [{
       picture: DEFAULT_SPEAKER_IMAGE,
       name: "Grazielly Costa",
       title: "UX/UI Designer",
@@ -126,7 +170,7 @@ const fallbackScheduleItems: ScheduleItemData[] = [
       position: "Palestrante",
       classroom: "4o Ano A",
       links: [{ url: "https://www.linkedin.com", image: DEFAULT_CONTACT_ICON, label: "LinkedIn" }],
-    },
+    }],
   },
 ];
 
@@ -221,23 +265,7 @@ export async function getHomePageData() {
       bannerDescription:
         "A SETI e um evento do curso tecnico de informatica da escola Leandro Francischini, em Sumare, com uma semana dedicada a imersao dos alunos por meio de palestras, atividades e dinamicas interativas.",
       scheduleTitle: `Cronograma ${event.eventYear}`,
-      scheduleItems: schedule.map((item) => ({
-        id: `event-day-${item.id}`,
-        dayLabel: formatDayLabel(item.eventDate),
-        speaker: {
-          picture: resolveStorageUrl("speakers", item.speaker.speakerImage) ?? DEFAULT_SPEAKER_IMAGE,
-          name: item.speaker.speakerName,
-          title: item.speaker.speakerPosition,
-          description: item.speaker.speakerDescription,
-          position: "Palestrante",
-          classroom: item.class.displayName,
-          links: item.speaker.contacts.map((contact) => ({
-            url: contact.contactUrl,
-            image: resolveStorageUrl("contacts", contact.contactIcon) ?? DEFAULT_CONTACT_ICON,
-            label: contact.contactName,
-          })),
-        },
-      })),
+      scheduleItems: groupScheduleItems(schedule),
     };
   } catch (error) {
     logPublicDataError("home", error);

@@ -3,6 +3,7 @@
 interface TimelineItem {
   id: string;
   dayLabel: string;
+  isInteractive?: boolean;
 }
 
 interface TimelineProps {
@@ -64,6 +65,7 @@ export default function Timeline({
 
         {items.map((item, index) => {
           const isActive = item.id === activeId;
+          const isInteractive = item.isInteractive !== false;
           const position = items.length > 1 ? (index / stepCount) * 100 : 0;
           const alignmentClass =
             index === 0
@@ -76,8 +78,9 @@ export default function Timeline({
             <button
               key={item.id}
               type="button"
-              onClick={() => onSelect(item.id)}
-              className={`group absolute top-0 cursor-pointer text-center ${alignmentClass}`}
+              disabled={!isInteractive}
+              onClick={isInteractive ? () => onSelect(item.id) : undefined}
+              className={`${isInteractive ? "group cursor-pointer" : "pointer-events-none cursor-default"} absolute top-0 text-center ${alignmentClass}`}
               style={{ left: `${position}%` }}
               aria-current={isActive ? "date" : undefined}
             >
@@ -89,7 +92,7 @@ export default function Timeline({
                 {item.dayLabel}
               </span>
 
-              {!isActive ? (
+              {!isActive && isInteractive ? (
                 <span className="absolute left-1/2 top-[clamp(1.1rem,4.2vw,1.1875rem)] h-[clamp(1.25rem,5vw,1.6875rem)] w-[2px] -translate-x-1/2 bg-white/85" />
               ) : null}
 

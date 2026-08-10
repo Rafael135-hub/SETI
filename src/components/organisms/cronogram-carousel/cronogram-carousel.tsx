@@ -12,7 +12,9 @@ gsap.registerPlugin(ScrollTrigger);
 interface CronogramItem {
   id: string;
   dayLabel: string;
-  speaker: SpeakerCardProps;
+  speakerNames: string;
+  isTimelineInteractive: boolean;
+  speakers: SpeakerCardProps[];
 }
 
 interface CronogramCarouselProps {
@@ -198,7 +200,11 @@ export default function CronogramCarousel({
               }}
             >
               <Timeline
-                items={items.map(({ id, dayLabel }) => ({ id, dayLabel }))}
+                items={items.map(({ id, dayLabel, isTimelineInteractive }) => ({
+                  id,
+                  dayLabel,
+                  isInteractive: isTimelineInteractive,
+                }))}
                 activeId={activeId}
                 activeIndex={activeIndex}
                 autoplayDurationMs={AUTOPLAY_DURATION_MS}
@@ -234,7 +240,7 @@ export default function CronogramCarousel({
                     ease: [0.22, 1, 0.36, 1],
                   }}
                 >
-                  <SpeakerCard {...activeItem.speaker} />
+                  <SpeakerCard {...activeItem.speakers[0]} />
                 </motion.div>
               </AnimatePresence>
             </div>

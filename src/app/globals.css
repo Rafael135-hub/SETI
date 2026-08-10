@@ -1,6 +1,14 @@
 @import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400..900&family=Outfit:wght@100..900&display=swap');
 @import "tailwindcss";
 
+@font-face {
+  font-family: "Aquire";
+  src: url("/aquire/AquireLight-YzE0o.otf") format("opentype");
+  font-style: normal;
+  font-weight: 300;
+  font-display: swap;
+}
+
 :root {
   --background: #080018;
 
@@ -45,6 +53,7 @@
 
   --font-outfit-sans: "Outfit", ui-sans-serif, system-ui, sans-serif;
   --font-orbitron: "Orbitron", sans-serif;
+  --font-aquire: "Aquire", sans-serif;
 }
 
 @theme inline {
@@ -91,6 +100,7 @@
 
   --font-outfit-sans: "Outfit", ui-sans-serif, system-ui, sans-serif;
   --font-orbitron: "Orbitron", sans-serif;
+  --font-aquire: "Aquire", sans-serif;
 }
 
 @media (prefers-color-scheme: dark) {

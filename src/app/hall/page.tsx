@@ -14,7 +14,7 @@ export default async function HallPage() {
   const hallPageData = await getHallPageData();
 
   return (
-    <main className="seti-page-background relative isolate min-h-screen overflow-visible text-white">
+    <main className="seti-page-background relative min-h-screen overflow-visible text-white">
       {hallPageData.isClosed ? <div className="hall-podium-background pointer-events-none absolute left-1/2 top-0 z-0 hidden h-[100svh] w-[110vw] -translate-x-1/2 md:block" aria-hidden="true" /> : null}
       <div className="relative z-10">
         {hallPageData.isClosed ? (
